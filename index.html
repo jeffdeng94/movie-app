@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Movie App</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="logo">
+        <i class="fa-solid fa-clapperboard"></i>
+        <span class="header-title">The Movie App</span>
+      </div>
+      <div class="db-logo-container">
+        <a href="https://www.themoviedb.org/" target="_blank"><img src="./img/the movie db.svg" alt="" /></a>
+      </div>
+
+      <form id="form">
+        <input type="text" id="search" class="search" placeholder="Search" />
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </form>
+    </header>
+    <main class="main">
+      <div class="container">
+        <!-- <div class="movie-card">
+          <div class="img-container">
+            <img
+              src="http://sciencefiction.com/wp-content/uploads/2017/06/Spider-Man-Homecoming-International-poster.jpg"
+              alt="SpiderMan"
+              class="movie-img"
+            />
+            <div class="overview">
+              <h3>Overview</h3>
+              <p>
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eum porro sed hic in quis accusamus veritatis perferendis
+                reprehenderit repellat expedita?
+              </p>
+            </div>
+          </div>
+          <div class="movie-info">
+            <h3 class="movie-title">SpiderMan</h3>
+            <span class="movie-rating lightgreen">8.0</span>
+          </div>
+          <div class="play">
+            <i class="fa-regular fa-circle-play"></i>
+          </div>
+        </div>
+        -->
+      </div>
+      <div class="page-list">
+        <ul>
+          <li class="page clicked">1</li>
+          <li class="page">2</li>
+          <li class="page">3</li>
+          <li class="page">4</li>
+          <li class="page">5</li>
+        </ul>
+      </div>
+      <div class="video-container closed">
+        <iframe
+          width="1280"
+          height="720"
+          src=""
+          title="YouTube video player"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+        <p class="no-trailer">Sorry no trailer available : (</p>
+        <i class="fa-solid fa-xmark"></i>
+      </div>
+      <button class="top">
+        <i class="fa-solid fa-arrow-up"></i>
+      </button>
+    </main>
+    <footer class="footer">
+      <p class="footer-heading">Movie App Created By Jeff</p>
+      <div class="footer-info">
+        <a href="https://github.com/jeffdeng94" class="github" target="_blank"><i class="fa-brands fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/qiqin-jeff-deng-28b731149/" class="linkedin" target="_blank"
+          ><i class="fa-brands fa-linkedin"></i
+        ></a>
+      </div>
+      <div class="API-info">
+        <span>API Source: </span>
+        <a href="https://www.themoviedb.org/" target="_blank"><img src="./img/the movie db.svg" /></a>
+      </div>
+    </footer>
+
+    <script src="./script.js"></script>
+  </body>
+</html>

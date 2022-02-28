@@ -1,8 +1,12 @@
 const API_URL = 'https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=690d49b865b2db27de494cb0d51a7a8e&page=1'
+const MOVIE_URL = 'https://api.themoviedb.org/3/movie/movie-id?api_key=690d49b865b2db27de494cb0d51a7a8e&language=en-US'
 const IMG_PATH = 'https://image.tmdb.org/t/p/w1280'
 const SEARCH_API = 'https://api.themoviedb.org/3/search/movie?api_key=690d49b865b2db27de494cb0d51a7a8e&query="'
 const VIDEO_URL = 'https://api.themoviedb.org/3/movie/videoID/videos?api_key=690d49b865b2db27de494cb0d51a7a8e'
 const TRAILER_URL = 'https://www.youtube.com/embed/'
+
+//logo div DOM
+const logo = document.querySelector('.logo')
 
 //movie card container DOM
 const movieContainer = document.querySelector('.container')
@@ -36,7 +40,7 @@ const getMovies = async url => {
   }
 }
 
-//homepage error message function
+//error message function
 const errorMessage = (containerEl, error) => {
   containerEl.innerHTML = ''
   const errorEl = document.createElement('div')
@@ -54,60 +58,63 @@ getMovies(API_URL)
 const showMovies = movies => {
   movieContainer.innerHTML = ''
   movies.forEach(movie => {
-    const { title, id, overview, poster_path, vote_average } = movie
-    //check if img link is valid
-    let imgPath
-    if (poster_path !== null) {
-      imgPath = IMG_PATH + poster_path
-    } else {
-      imgPath = 'https://themoviescatalogue-app-vercel.vercel.app/assets/img/comingsoon.jpg'
-    }
+    //create movieCard div element
     const movieCard = document.createElement('div')
     movieCard.classList.add('movie-card')
-    movieCard.innerHTML = `
-      <div class="img-container">
-      <img
-        src="${imgPath}"
-        alt="${title}"
-        class="movie-img"
-      />
-      <div class="overview">
-        <h3>Overview</h3>
-        <p>
-          ${overview}
-        </p>
-      </div>
-      <div class="play">
-      <i class="fa-regular fa-circle-play"></i>
-      <span style="display:none">${id}</span>
-    </div>
-    </div>
-    <div class="movie-info">
-      <h3 class="movie-title">${title}</h3>
-      <span class="movie-rating ${getClassByRate(vote_average)}">${vote_average}</span>
-    </div>
 
-      `
+    //create loading spinner element and insert inside movie card
+    movieCard.innerHTML = ''
+    movieCard.innerHTML = `<div class="loader">Loading...</div>`
     movieContainer.appendChild(movieCard)
-  })
 
-  const playBtns = document.querySelectorAll('.play')
-  //play trailer video function
-  playBtns.forEach(playBtn => {
-    playBtn.addEventListener('click', e => {
-      videoContainer.classList.remove('closed')
-      getVideos(e.target.nextElementSibling.innerText)
-    })
-  })
+    //fetch each movie detail by movie-id then insert inside movie card
+    fetch(MOVIE_URL.replace('movie-id', movie.id))
+      .then(response => response.json())
+      .then(data => {
+        const { title, id, overview, poster_path, vote_average } = data
+        //check if img link is valid
+        let imgPath
+        if (poster_path !== null) {
+          imgPath = IMG_PATH + poster_path
+        } else {
+          imgPath = 'https://themoviescatalogue-app-vercel.vercel.app/assets/img/comingsoon.jpg'
+        }
 
-  closeBtn.addEventListener('click', () => {
-    video.src = ''
-    videoContainer.classList.add('closed')
-    noTrailer.classList.remove('show')
+        movieCard.innerHTML = ''
+        movieCard.innerHTML = `
+          <div class="img-container">
+          <img
+            src="${imgPath}"
+            alt="${title}"
+            class="movie-img"
+          />
+          <div class="overview">
+            <h3>Overview</h3>
+            <p>
+              ${overview}
+            </p>
+          </div>
+          <div class="play" id="${id}">
+          <i class="fa-regular fa-circle-play"></i>
+          <span style="display:none">${id}</span>
+        </div>
+        </div>
+        <div class="movie-info">
+          <h3 class="movie-title">${title}</h3>
+          <span class="movie-rating ${getClassByRate(vote_average)}">${vote_average}</span>
+        </div>
+    
+          `
+        movieContainer.appendChild(movieCard)
+      })
+      .catch(error => {
+        movieCard.innerHTML = ''
+        errorMessage(movieCard, error)
+      })
   })
 }
 
-//get videos
+//get trailer videos by movie id
 const getVideos = async id => {
   url = VIDEO_URL.replace('videoID', id.toString())
   try {
@@ -133,6 +140,22 @@ const getVideos = async id => {
     console.log(error)
   }
 }
+
+//add event listener to each play button using event delegation
+movieContainer.addEventListener('click', e => {
+  const id = e.target.parentElement.id
+  if (id) {
+    videoContainer.classList.remove('closed')
+    getVideos(id)
+  }
+})
+
+//add event listener to close button
+closeBtn.addEventListener('click', () => {
+  video.src = ''
+  videoContainer.classList.add('closed')
+  noTrailer.classList.remove('show')
+})
 
 //get class by rate
 const getClassByRate = vote => {
@@ -189,6 +212,7 @@ const highlightPage = () => {
   })
 }
 
+//scroll button DOM
 const scrollTopBtn = document.querySelector('.top')
 
 const scrollFunction = () => {
@@ -199,14 +223,15 @@ const scrollFunction = () => {
   }
 }
 
-const topFunction = () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' })
-}
-
 // When the user scrolls down 20px from the top of the document, show the button
 window.onscroll = function () {
   scrollFunction()
 }
 
+const topFunction = () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+}
 // When the user clicks on the button, scroll to the top of the document
 scrollTopBtn.addEventListener('click', topFunction)
+
+logo.addEventListener('click', () => window.location.reload())

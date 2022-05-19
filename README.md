@@ -1,20 +1,20 @@
 # Moive App
 
-A movie web-app allowing users to get to watch the latest movie info and trailers [Live Link](https://jeffdeng-movieapp.netlify.app/)
+A movie web-app allowing users to see the latest movie info and watch trailers [Live Link](https://jeffdeng-movieapp.netlify.app/)
 
 ## Description
 
 The is a Vanilla JS app.
 
-The purpose of this project is to practice and enhance my front-end development skills, especially HTML, CSS and JavaScript.
+The purpose of this project is to practice and enhance my front-end development skills, especially the fundamental HTML, CSS and JavaScript.
 
 ## Relevant Techs
 
 ### Front-End:
 
 - JavaScript
-- HTML
-- CSS
+- HTML5
+- CSS3
 
 ## Key Features
 
@@ -29,6 +29,6 @@ The purpose of this project is to practice and enhance my front-end development 
 
 ## Challenges
 
-- To achieve the trailer preview was a bit difficult, I finally figure it out by setting iframe uri for each movie while looping through elements
+- To achieve the trailer preview was a bit difficult, I applied iframe uri for each movie while looping through elements
 
 - It is always headache to operate DOM and BOM using pure JS, that's why we like to use framework such as React!
